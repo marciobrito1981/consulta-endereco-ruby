@@ -1,0 +1,4 @@
+class UserZipcodesController < ApplicationController
+
+    
+end

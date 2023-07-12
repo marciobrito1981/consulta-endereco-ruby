@@ -32,16 +32,18 @@ class AddressesController < ApplicationController
         response = Net::HTTP.get_response(URI("https://viacep.com.br/ws/#{zipcode}/json/"))
         if response.is_a?(Net::HTTPSuccess)
           data = JSON.parse(response.body)
-          address = Address.create(
-            street: data['logradouro'],
-            city: data['localidade'],
-            state: data['uf'],
-            zipcode: zipcode
-          )
-          
+            if data == {"erro"=>"true"}
+            else 
+            address = Address.create(
+              street: data['logradouro'],
+              city: data['localidade'],
+              state: data['uf'],
+              zipcode: zipcode
+            )
           return address
         end
-        nil
+        end
+       nil
       end
 end
 
